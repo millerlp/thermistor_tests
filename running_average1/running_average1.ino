@@ -38,10 +38,10 @@ void loop() {
   
   newtick = millis(); // read the millisecond timer value once per cycle
   
-  // If more than 31 milliseconds have elapsed since oldtick was
-  // last updated (the difference between newtick and oldtick >= 31)
+  // If more than 10 milliseconds have elapsed since oldtick was
+  // last updated (the difference between newtick and oldtick >= 10)
   // then take a new analog reading
-  if (newtick - oldtick >= 31) {
+  if (newtick - oldtick >= 20) {
    oldtick = newtick; // update oldtick value
    tempInArray[index] = analogRead(analogChannel); // Take a reading from analog channel 
    index = index++; // increment index
@@ -62,6 +62,8 @@ void loop() {
      total = total + tempInArray[i]; 
     }
     totalAvg = total >> 5; // divide by 32 using bitwise right-shift (2^5 = 32). 
+    // Alternatively, you can do the above operation like so:
+    // totalAvg = total / 32; //integer division, drops all remainders
     Serial.print(totalAvg); // The average ADC value (0 to 1023)
     Serial.print("\t");
     float voltage = totalAvg * (5.0 / 1023.0);
